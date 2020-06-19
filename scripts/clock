@@ -1,0 +1,6 @@
+#!/bin/sh
+
+DATE=$(date '+%a %d %b')
+TIME=$(date '+%I:%M %p')
+echo "📅 $DATE 🕔 $TIME"
+

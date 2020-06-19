@@ -1,0 +1,5 @@
+#!/bin/sh
+
+MEMORY=$(free -h | sed -e '/^Mem:/!d' -e 's/\s\+/ /g' | awk '{printf("%d\n", $3/$2*100)}')
+
+echo "RAM: $MEMORY%"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[ $(which iostat) ] || echo ""
+USAGE=$(iostat -c --dec=0 | sed '4!d' | awk '{print $1}')
+echo "CPU: $USAGE%"

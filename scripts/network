@@ -1,0 +1,4 @@
+#!/bin/sh
+RX=$(cat /sys/class/net/wwp0s20u4i1/statistics/rx_bytes | numfmt --to=iec --suffix=B)
+TX=$(cat /sys/class/net/wwp0s20u4i1/statistics/tx_bytes | numfmt --to=iec --suffix=B)
+echo "🔻 $RX  🔺 $TX"

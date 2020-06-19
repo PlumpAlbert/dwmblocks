@@ -12,7 +12,11 @@ install: output
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -f dwmblocks $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/dwmblocks
+	mkdir -p $(DESTDIR)$(PREFIX)/share/dwmblocks
+	cp -rf scripts $(DESTDIR)$(PREFIX)/share/dwmblocks
+	chmod -R 755 $(DESTDIR)$(PREFIX)/share/dwmblocks/scripts
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dwmblocks
+	rm -rf $(DESTDIR)$(PREFIX)/share/dwmblocks
 
 .PHONY: clean install uninstall

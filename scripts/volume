@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ $(which pamixer) ] || echo ""
+
+ICON="🔊"
+VOLUME=$(pamixer --get-volume)
+[ $VOLUME -lt 69 ] && ICON="🔉"
+[ $VOLUME -lt 29 ] && ICON="🔈"
+
+[ $(pamixer --get-mute) -eq "true" ] && ICON="🔇"
+
+echo "$ICON $VOLUME%"

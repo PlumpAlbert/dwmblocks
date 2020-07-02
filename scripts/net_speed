@@ -1,0 +1,20 @@
+#!/bin/sh
+
+CONNECTION="$(nmcli device status | awk '/connected/ {print $4}')"
+INTERFACE="$(nmcli connection show "$CONNECTION" | awk '/GENERAL.IP-IFACE:/ {print $2}')"
+
+# Get RX bytes
+RX_BYTES=$(cat "/sys/class/net/$INTERFACE/statistics/rx_bytes")
+OLD_RX=0
+[ -f /tmp/net_speed_rx ] && OLD_RX=$(cat /tmp/net_speed_rx)
+DOWN_SPEED="$(numfmt --to=iec --suffix='B/s' $((RX_BYTES - OLD_RX)))"
+echo $RX_BYTES > /tmp/net_speed_rx
+
+# Get TX bytes
+TX_BYTES=$(cat "/sys/class/net/$INTERFACE/statistics/tx_bytes")
+OLD_TX=0
+[ -f /tmp/net_speed_tx ] && OLD_TX=$(cat /tmp/net_speed_tx)
+UP_SPEED="$(numfmt --to=iec --suffix='B/s' $((TX_BYTES - OLD_TX)))"
+echo $TX_BYTES > /tmp/net_speed_tx
+
+echo "📶$CONNECTION ⬇ $DOWN_SPEED ⬆️ $UP_SPEED"

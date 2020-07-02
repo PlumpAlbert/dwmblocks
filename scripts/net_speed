@@ -1,6 +1,7 @@
 #!/bin/sh
 
 CONNECTION="$(nmcli device status | awk '/connected/ {print $4}')"
+[ -z $CONNECTION ] && echo ""
 INTERFACE="$(nmcli connection show "$CONNECTION" | awk '/GENERAL.IP-IFACE:/ {print $2}')"
 
 # Get RX bytes

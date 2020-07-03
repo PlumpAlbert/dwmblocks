@@ -1,0 +1,5 @@
+#!/bin/sh
+
+ICON="🔆"
+VALUE=$(xbacklight -get)
+printf "$ICON %d%" $VALUE

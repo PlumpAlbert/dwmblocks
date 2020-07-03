@@ -4,8 +4,7 @@ static const Block blocks[] = {
   {"",  "/usr/local/share/dwmblocks/scripts/rescuetime 2>/dev/null", 1800, 3},
 	{"",  "cat /tmp/recordingicon 2>/dev/null",	0,	9},
 	{"",	"/usr/local/share/dwmblocks/scripts/ram 2>/dev/null",	10,	5},
-	{"",	"/usr/local/share/dwmblocks/scripts/network 2>/dev/null",	300,	4},
-	{"",	"/usr/local/share/dwmblocks/scripts/keyboard 2>/dev/null",	1,	2},
+	{"",	"/usr/local/share/dwmblocks/scripts/net_speed 2>/dev/null",	1,	4},
 	{"",	"/usr/local/share/dwmblocks/scripts/clock 2>/dev/null",	60,	1},
 };
 

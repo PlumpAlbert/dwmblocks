@@ -1,2 +1,2 @@
 #!/bin/sh
-free -h --si | awk '/^Mem:/ {print "RAM: "$3}'
+free -h --si | awk '/^Mem:/ {print "🐏 "$3}'

@@ -15,6 +15,7 @@ install: output
 	mkdir -p $(DESTDIR)$(PREFIX)/share/dwmblocks
 	cp -rf scripts $(DESTDIR)$(PREFIX)/share/dwmblocks
 	chmod -R 755 $(DESTDIR)$(PREFIX)/share/dwmblocks/scripts
+	./generator.sh > $(DESTDIR)$(PREFIX)/share/dwmblocks/codes
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dwmblocks
 	rm -rf $(DESTDIR)$(PREFIX)/share/dwmblocks

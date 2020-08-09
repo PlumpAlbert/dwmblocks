@@ -4,5 +4,5 @@ ifstat -t 1 | \
   sed -e '/^Interface/d' | \
   awk 'BEGIN {rx=0; tx=0} /^\w/ {rx+=$6; tx+=$8} END {print rx"\n"tx}' | \
   while read -r DOWN_SPEED UP_SPEED; do
-    echo "⬇ $(numfmt --to=iec --suffix='B/s' $DOWN_SPEED) ⬆️ $(numfmt --to=iec --suffix='B/s' $UP_SPEED)"
+    printf "⬇ %7s ⬆️ %7s" "$(numfmt --to=iec --suffix='B/s' $DOWN_SPEED)" "$(numfmt --to=iec --suffix='B/s' $UP_SPEED)"
   done

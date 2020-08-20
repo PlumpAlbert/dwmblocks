@@ -1,8 +1,26 @@
 #!/bin/sh
+# === VARIABLES ===
+RX_FILE=/tmp/net_speed_rx
+TX_FILE=/tmp/net_speed_tx
 
-ifstat -t 1 | \
-  sed -e '/^Interface/d' | \
-  awk 'BEGIN {rx=0; tx=0} /^\w/ {rx+=$6; tx+=$8} END {print rx"\n"tx}' | \
-  while read -r DOWN_SPEED UP_SPEED; do
-    printf "⬇ %7s ⬆️ %7s" "$(numfmt --to=iec --suffix='B/s' $DOWN_SPEED)" "$(numfmt --to=iec --suffix='B/s' $UP_SPEED)"
-  done
+# Get list of active connections
+connections="$(nmcli -g device,state device status | sed -e '/disconnected/d' -e '/unmanaged/d' -e 's/\(.\+\)\:.*/\1/')"
+
+while read -r DEVICE; do
+  # Calculate down speed
+  export current=$(cat "/sys/class/net/$DEVICE/statistics/rx_bytes")
+  [ -f "$RX_FILE" ] && export old=$(cat "$RX_FILE") || export old=0
+  export RX_SPEED=$(($current - $old))
+  echo $current > "$RX_FILE"
+  # Calculate up speed
+  export current=$(cat "/sys/class/net/$DEVICE/statistics/tx_bytes")
+  [ -f "$TX_FILE" ] && export old=$(cat "$TX_FILE") || export old=0
+  export TX_SPEED=$(($current - $old))
+  echo $current > "$TX_FILE"
+done <<< "$connections";
+
+# Format the output
+printf \
+  "⬇ %7s ⬆️ %7s" \
+  "$(numfmt --to=iec --suffix='B/s' $RX_SPEED)" \
+  "$(numfmt --to=iec --suffix='B/s' $TX_SPEED)"

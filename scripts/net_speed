@@ -9,12 +9,14 @@ connections="$(nmcli -g device,state device status | sed -e '/disconnected/d' -e
 while read -r DEVICE; do
   # Calculate down speed
   export current=$(cat "/sys/class/net/$DEVICE/statistics/rx_bytes")
-  [ -f "$RX_FILE" ] && export old=$(cat "$RX_FILE") || export old=0
+  [ -f "$RX_FILE" ] && export old=$(cat "$RX_FILE")
+  [ -z $old ] && export old=0
   export RX_SPEED=$(($current - $old))
   echo $current > "$RX_FILE"
   # Calculate up speed
   export current=$(cat "/sys/class/net/$DEVICE/statistics/tx_bytes")
-  [ -f "$TX_FILE" ] && export old=$(cat "$TX_FILE") || export old=0
+  [ -f "$TX_FILE" ] && export old=$(cat "$TX_FILE")
+  [ -z $old ] && export old=0
   export TX_SPEED=$(($current - $old))
   echo $current > "$TX_FILE"
 done <<< "$connections";
